@@ -4,6 +4,7 @@ const { isLoggedIn, isLoggedInAndAuthorized, isLoggedInAndAdmin } = require("./a
 
 const router = require("express").Router();
 
+const wait = ms => new Promise(resolve => setTimeout(resolve, ms));
 
 //CREATE
 router.post("/", isLoggedInAndAdmin, async (req,res) => {
@@ -30,6 +31,7 @@ router.get("/find/:id", async (req,res) => {
 
 //GET ALL PROJECTS
 router.get("/", async (req,res) => {
+    await wait(3000);
     try {
         const projects = await Project.find();
         res.status(200).json(projects);

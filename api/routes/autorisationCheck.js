@@ -6,6 +6,14 @@ const isLoggedIn = (req,res,next) => {
     }
 }
 
+const isLoggedOut = (req, res, next) => {
+    if (!req.user) {
+        next();
+    } else {
+        return res.status(401).redirect("/");
+    }
+}
+
 const isLoggedInAndAuthorized = (req,res,next) => {
     isLoggedIn(req,res, () => {
        if(req.user.id === req.params.id || req.user.isAdmin) {
@@ -26,4 +34,4 @@ const isLoggedInAndAdmin = (req,res,next) => {
     })
 }
 
-module.exports = { isLoggedIn, isLoggedInAndAuthorized, isLoggedInAndAdmin };
+module.exports = { isLoggedIn, isLoggedOut, isLoggedInAndAuthorized, isLoggedInAndAdmin };

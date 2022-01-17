@@ -61,7 +61,7 @@ const Amount = styled.span`
     width: 30px;
     height: 30px;
     border-radius: 10px;
-    border: 1px solid teal;
+    border: 1px solid grey;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -69,14 +69,17 @@ const Amount = styled.span`
 `;
 
 const Button = styled.button`
-    padding: 15px;
-    border: 2px solid teal;
-    background-color: white;
+    padding: 10px;
+    font-weight: 600;
     cursor: pointer;
-    font-weight: 500;
+    background-color: black;
+    color: white;
+    border-color: transparent;
 
     &:hover {
-        background-color: #f8f4f4;
+        background-color: white;
+        border-color: lightgrey;
+        color: black;
     }
 `;
 
@@ -99,7 +102,9 @@ const Product = () => {
 
     const handleQuantity = (type) => {
         if(type === "decrease") {
-            setQuantity(prev => prev-1);
+            if(quantity > 1) {
+                setQuantity(prev => prev-1);
+            }
         } else {
             setQuantity(prev => prev+1);
         }
@@ -124,9 +129,9 @@ const Product = () => {
                     <Price>{product.price}$</Price>
                     <AddContainer>
                         <AmountContainer>
-                            <Remove onClick={() => handleQuantity("decrease")}/>
+                            <Remove onClick={() => handleQuantity("decrease")} style={{cursor:"pointer"}}/>
                             <Amount>{quantity}</Amount>
-                            <Add onClick={() => handleQuantity("increase")}/>
+                            <Add onClick={() => handleQuantity("increase")} style={{cursor:"pointer"}}/>
                         </AmountContainer>
                         <Button onClick={() => handleClick()}>ADD TO CART</Button>
                     </AddContainer>

@@ -14,6 +14,7 @@ const Container = styled.div`
 `;
 
 function App() {
+
   return (
     <Router>
       <>
@@ -21,11 +22,11 @@ function App() {
         <Container>
           <Sidebar />
           <Routes>
-            <Route exact path="/" element={<Home/>}/>
-            <Route path="/users" element={<UserList/>}/>
-            <Route path="/user/:id" element={<User/>}/>
-            <Route path="/products" element={<ProductList/>}/>
-            <Route path="/product/:id" element={<Product/>}/>
+            <Route path="/admin" element={<Home/>}/>
+            <Route path="/admin/users" element={<UserList/>}/>
+            <Route path="/admin/user/:id" element={<User/>}/>
+            <Route path="/admin/products" element={<ProductList/>}/>
+            <Route path="/admin/product/:id" element={<Product/>}/>
           </Routes>
         </Container>
       </>

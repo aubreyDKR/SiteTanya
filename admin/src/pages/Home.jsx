@@ -14,6 +14,7 @@ const WidgetsContainer = styled.div`
 `;
 
 const Home = () => {
+
     return (
         <Container>
             <FeaturedInfo/>

@@ -3,7 +3,7 @@ import { API_SERVER } from "../constants/url";
 import axios from "axios";
 
 export const getUserInfos = async (dispatch) => {
-    axios.get(API_SERVER + "auth/getUserInfos", {
+    await axios.get(API_SERVER + "auth/getUserInfos", {
         headers: {
             Accept: "application/json",
             "Content-Type": "application/json",
@@ -24,7 +24,7 @@ export const getUserInfos = async (dispatch) => {
 }
 
 export const isAdmin = async () => {
-    axios.get(API_SERVER + "auth/isAdmin", {
+    axios.get(API_SERVER + "admin/isAdmin", {
         headers: {
             Accept: "application/json",
             "Content-Type": "application/json",
@@ -32,6 +32,6 @@ export const isAdmin = async () => {
         },
         withCredentials: true,
     }).then(res => {
-        console.log(res.data);
-    })
+        console.log(res);
+    });
 }

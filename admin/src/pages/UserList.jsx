@@ -82,7 +82,7 @@ const UserList = () => {
             renderCell: (params) => {
                 return (
                     <>
-                        <Link to={"/user/" + params.row.id} style={{textDecoration:"none"}}>
+                        <Link to={"admin/user/" + params.row.id} style={{textDecoration:"none"}}>
                             <EditButton>Edit</EditButton>
                         </Link>
                         <DeleteButton onClick={()=>handleDelete(params.row.id)}/>

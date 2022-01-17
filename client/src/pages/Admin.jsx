@@ -1,23 +1,24 @@
-import { useEffect } from "react";
-import { ADMIN_URL } from "../constants/url";
+import { useEffect, useState } from "react";
+import { ADMIN_URL, API_SERVER, ROOT_URL } from "../constants/url";
 import { useDispatch, useSelector } from 'react-redux';
-import { getUserInfos, isAdmin } from '../redux/apiCalls';
+import { getUserInfos } from '../redux/apiCalls';
 
 const Admin = () => {
     const user = useSelector((state) => state.user.currentUser);
-
-    const dispatch = useDispatch();
+    
+    const dispatch = useDispatch(); 
 
     useEffect(() => {
         getUserInfos(dispatch);
-        
-    }, []);
+    },[]);
 
-    /*useEffect(() => {
-        window.location.replace(ADMIN_URL);
-    }, [user]);*/
-
-    console.log(user);
+    useEffect(() => {
+        if (user && user.isAdmin > 0) {
+            window.location.replace(ADMIN_URL);
+        } else {
+            window.location.replace(ROOT_URL + "login");
+        }
+    }, [user]);
 
     return (
         <div>
