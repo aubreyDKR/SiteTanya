@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Language, NotificationsNone, Settings } from '@material-ui/icons';
 import { Badge } from '@material-ui/core';
@@ -47,6 +47,9 @@ const ProfilePicture = styled.img`
 `;
 
 const Topbar = () => {
+    const [user, setUser] = useState([]);
+
+
     return (
         <Container>
             <Wrapper>

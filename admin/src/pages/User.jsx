@@ -1,6 +1,9 @@
 import styled from 'styled-components';
 import { colorTertiary } from '../constants/styles';
 import { CalendarToday, MailOutline, LocationSearching, PermIdentity, CloudDone, Publish } from "@material-ui/icons";
+import { useEffect, useState } from 'react';
+import { getUserData } from '../api';
+import { useParams } from 'react-router-dom';
 
 const Container = styled.div`
     flex: 4;
@@ -131,23 +134,40 @@ const UpdateButton = styled.button`
 `;
 
 const User = () => {
+    const { id } = useParams();
+    const [user, setUser] = useState([]);
+
+    useEffect(() => {
+        const getUser = async () => {
+            try {
+                await getUserData(setUser, id);
+            } catch(err) {
+                console.log(err);
+            }   
+        };
+        getUser();
+    }, []);
+
     return (
         <Container>
             <Title>Edit User</Title>
             <UserContainer>
                 <UserInfos>
                     <UserInfosHeader>
-                        <UserImg src="https://st3.depositphotos.com/3854637/32498/v/1600/depositphotos_324988148-stock-illustration-head-little-european-girl-profile.jpg"/>
-                        <UserName>Tatiana Dekker</UserName>
+                        <UserImg src={user.profilePicture}/>
+                        <UserName>{user.username}</UserName>
                     </UserInfosHeader>
                     <AccountDetails>
                         <UserInfosTitle>Account Details</UserInfosTitle>
-                        <UserInfosItem><CloudDone style={{ fontSize: 16, marginRight: 10 }} />GoogleAuth</UserInfosItem>
-                        <UserInfosItem><CalendarToday style={{ fontSize: 16, marginRight: 10 }} />10.12.1999</UserInfosItem>
+                        <UserInfosItem>
+                            <CloudDone style={{ fontSize: 16, marginRight: 10 }} />
+                            {user.googleId ? "GoogleAuth" : "Unknow"}
+                        </UserInfosItem>
+                        <UserInfosItem><CalendarToday style={{ fontSize: 16, marginRight: 10 }} />{user.createdAt}</UserInfosItem>
                     </AccountDetails>
                     <ContactDetails>
                         <UserInfosTitle>Contact Details</UserInfosTitle>
-                        <UserInfosItem><MailOutline style={{ fontSize: 16, marginRight: 10 }} />tatianadekker@gmail.com</UserInfosItem>
+                        <UserInfosItem><MailOutline style={{ fontSize: 16, marginRight: 10 }} />{user.email}</UserInfosItem>
                         <UserInfosItem><LocationSearching style={{ fontSize: 16, marginRight: 10 }} />Nizhny Novgorod | Russia</UserInfosItem>
                     </ContactDetails>
                 </UserInfos>
@@ -155,11 +175,11 @@ const User = () => {
                     <UserEditFormLeft>
                         <UserEditFormItem>
                             <UserEditFormItemLabel>Username</UserEditFormItemLabel>
-                            <UserEditFormItemInput type="text" placeholder="Tatiana Dekker" />
+                            <UserEditFormItemInput type="text" placeholder={user.username} />
                         </UserEditFormItem>
                         <UserEditFormItem>
                             <UserEditFormItemLabel>Email</UserEditFormItemLabel>
-                            <UserEditFormItemInput type="email" placeholder="tatianadekker@gmail.com" />
+                            <UserEditFormItemInput type="email" placeholder={user.email} />
                         </UserEditFormItem>
                         <UserEditFormItem>
                             <UserEditFormItemLabel>Address</UserEditFormItemLabel>
@@ -168,7 +188,7 @@ const User = () => {
                     </UserEditFormLeft>
                     <UserEditFormRight>
                         <UserEditFormItem>
-                            <UserEditFormUserImg src="https://st3.depositphotos.com/3854637/32498/v/1600/depositphotos_324988148-stock-illustration-head-little-european-girl-profile.jpg"/>
+                            <UserEditFormUserImg src={user.profilePicture}/>
                             <Publish/>
                             <UserEditFormItemInput type="file" id="file" style={{display:"none"}}/>
                         </UserEditFormItem>

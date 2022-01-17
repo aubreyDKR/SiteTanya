@@ -1,10 +1,12 @@
 import styled from 'styled-components';
 import { DataGrid } from '@material-ui/data-grid';
-import { DeleteOutline} from '@material-ui/icons';
+import { DeleteOutline } from '@material-ui/icons';
 import { Link } from "react-router-dom";
-import { users } from "../data.js";
-import { useState } from "react";
+//import { users } from "../data.js";
+import { getUsersData } from '../api.js';
+import { useEffect, useState } from "react";
 import { colorTertiary } from '../constants/styles';
+import { API_URL, BASE_URL, CLIENT_URL } from '../constants/url.js';
 
 const Container = styled.div`
     flex: 4;
@@ -43,18 +45,29 @@ const DeleteButton = styled(DeleteOutline)`
 `;
 
 const UserList = () => {
-    const [data, setData] = useState(users);
+    const [usersData, setUsersData] = useState([]);
+
+    useEffect(() => {
+        const getUsers = async () => {
+            try {
+                await getUsersData(setUsersData);
+            } catch(err) {
+                console.log(err);
+            }
+        };
+        getUsers();
+    }, []);
 
     const columns = [
-        { field: 'id', headerName: 'ID', width: 90 },
+        { field: '_id', headerName: 'ID', width: 225 },
         {
             field: 'user',
             headerName: 'Username',
-            width: 200,
+            width: 180,
             renderCell: (params) => {
                 return (
                     <User>
-                        <UserImg src={params.row.avatar} />
+                        <UserImg src={params.row.profilePicture} />
                         {params.row.username}
                     </User>
                 )
@@ -63,7 +76,7 @@ const UserList = () => {
         {
             field: 'email',
             headerName: 'Email',
-            width: 200,
+            width: 225,
         },
         {
             field: 'status',
@@ -82,24 +95,29 @@ const UserList = () => {
             renderCell: (params) => {
                 return (
                     <>
-                        <Link to={"admin/user/" + params.row.id} style={{textDecoration:"none"}}>
+                        <Link to={"/admin/user/" + params.row._id}>
                             <EditButton>Edit</EditButton>
                         </Link>
-                        <DeleteButton onClick={()=>handleDelete(params.row.id)}/>
+                        <DeleteButton onClick={() => handleDelete(params.row._id)} />
                     </>
                 )
             }
         },
     ];
 
-    const handleDelete = (id) => {
+    /*const handleDelete = (id) => {
         setData(data.filter((item) => item.id !== id));
+    }*/
+
+    const handleDelete = (id) => {
+        setUsersData(usersData.filter((item) => item.id !== id));
     }
 
     return (
         <Container>
             <DataGrid
-                rows={data}
+                getRowId={(row) => row._id}
+                rows={usersData}
                 columns={columns}
                 pageSize={5}
                 rowsPerPageOptions={[5]}

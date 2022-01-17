@@ -22,16 +22,3 @@ export const getUserInfos = async (dispatch) => {
         authFailure();
     });
 }
-
-export const isAdmin = async () => {
-    axios.get(API_SERVER + "admin/isAdmin", {
-        headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-            "Access-Control-Allow-Credentials": true,
-        },
-        withCredentials: true,
-    }).then(res => {
-        console.log(res);
-    });
-}
