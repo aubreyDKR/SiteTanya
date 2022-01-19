@@ -4,16 +4,18 @@ import { publicRequest } from "../requestMethods";
 import { useState, useEffect } from 'react';
 import { CircularProgress } from "@material-ui/core";
 import Skeleton from "./Skeleton";
+import {mobile, tablet} from "../responsive";
 
 const Container = styled.div`
     width: 70%;
     margin: auto;
-    -webkit-column-count: 3;
-    -moz-column-count: 3;
     column-count: 3;
-    -webkit-column-width: 33%;
-    -moz-column-width: 33%;
     column-width: 33%;
+    ${mobile({
+        width: "90%",
+        columnCount: "2",    
+        columnWidth: "50%",
+    })}
 `;
 
 const Gallery = () => {
