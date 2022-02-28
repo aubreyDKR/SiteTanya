@@ -19,7 +19,7 @@ router.get("/login/failed", (req,res) => {
 });
 
 router.get("/getUserInfos", isLoggedIn, async (req,res) => {
-    await wait(3000);
+    //await wait(3000);
     await res.status(200).json({
         success: true,
         user: req.user,

@@ -31,7 +31,7 @@ router.get("/find/:id", async (req,res) => {
 
 //GET ALL PROJECTS
 router.get("/", async (req,res) => {
-    await wait(3000);
+    //await wait(3000);
     try {
         const projects = await Project.find();
         res.status(200).json(projects);
