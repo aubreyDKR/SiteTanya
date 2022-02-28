@@ -1,3 +1,4 @@
+const { get } = require("mongoose");
 const User = require("../models/User");
 const { isLoggedIn, isLoggedInAndAuthorized, isLoggedInAndAdmin } = require("./autorisationCheck");
 
@@ -40,8 +41,7 @@ router.delete("/:id", isLoggedInAndAuthorized, async (req,res) => {
 router.get("/find/:id", isLoggedInAndAdmin, async (req,res) => {
     try {
         const user = await User.findById(req.params.id);
-        const {password, ...others} = user._doc;
-        res.status(200).json(others);
+        res.status(200).json(user);
     } catch (err) {
         res.status(500).json(err);
     }
@@ -49,14 +49,24 @@ router.get("/find/:id", isLoggedInAndAdmin, async (req,res) => {
 
 //GET ALL USERS
 router.get("/", isLoggedInAndAdmin, async (req,res) => {
-    const query = req.query.new
     try {
-        const users =  query ? await User.find().sort({ _id:-1}).limit(5) : await User.find();
+        const users =  await User.find().sort({ _id:-1});
         res.status(200).json(users);
     } catch (err) {
         res.status(500).json(err);
     }
 });
+
+//GET NEW USERS
+router.get("/new", isLoggedInAndAdmin, async (req, res) => {
+    //const query = req.query.new
+    try {
+        const users =  await User.find().sort({_id: -1}).limit(5);
+        res.status(200).json(users);
+    } catch (err) {
+        res.status(500).json(err);
+    }
+})
 
 //GET USER STATS
 router.get("/stats", isLoggedInAndAdmin, async (req,res) => {

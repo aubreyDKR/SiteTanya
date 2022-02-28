@@ -1,5 +1,7 @@
 import { Visibility } from '@material-ui/icons';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import { getNewUsers } from '../../api';
 
 const Container = styled.div`
     flex: 1;
@@ -51,30 +53,32 @@ const Button = styled.button`
 `;
 
 const WidgetSm = () => {
+    const [newUsers, setNewUsers] = useState([]);
+
+    useEffect(() => {
+        const getUsers = async () => {
+            try {
+                await getNewUsers(setNewUsers)
+            } catch(err) {
+                console.log(err);
+            }
+        };
+        getUsers()
+    }, [])
+
+    console.log(newUsers);
+
     return (
         <Container>
             <Title>New Members</Title>
             <UsersContainer>
-                <User>
-                    <UserImg src="https://st3.depositphotos.com/3854637/32498/v/1600/depositphotos_324988148-stock-illustration-head-little-european-girl-profile.jpg"/>
-                    <UserName>Tatiana Dekker</UserName>
-                    <Button><Visibility style={{fontSize:16,marginRight:5}}/>Display</Button>
-                </User>
-                <User>
-                    <UserImg src="https://st3.depositphotos.com/3854637/32498/v/1600/depositphotos_324988148-stock-illustration-head-little-european-girl-profile.jpg"/>
-                    <UserName>Tatiana Dekker</UserName>
-                    <Button><Visibility style={{fontSize:16,marginRight:5}}/>Display</Button>
-                </User>
-                <User>
-                    <UserImg src="https://st3.depositphotos.com/3854637/32498/v/1600/depositphotos_324988148-stock-illustration-head-little-european-girl-profile.jpg"/>
-                    <UserName>Tatiana Dekker</UserName>
-                    <Button><Visibility style={{fontSize:16,marginRight:5}}/>Display</Button>
-                </User>
-                <User>
-                    <UserImg src="https://st3.depositphotos.com/3854637/32498/v/1600/depositphotos_324988148-stock-illustration-head-little-european-girl-profile.jpg"/>
-                    <UserName>Tatiana Dekker</UserName>
-                    <Button><Visibility style={{fontSize:16,marginRight:5}}/>Display</Button>
-                </User>
+                {newUsers.map((item) => (
+                    <User>
+                        <UserImg src={item.profilePicture}/>
+                        <UserName>{item.username}</UserName>
+                        <Button><Visibility style={{fontSize:16,marginRight:5}}/>Display</Button>
+                    </User>
+                ))}
             </UsersContainer>
         </Container>
     )

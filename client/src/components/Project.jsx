@@ -17,7 +17,7 @@ const Overlay = styled.div`
 const Container = styled.div`
     position: relative;
     display: flex;
-    margin: 10px 0px;
+    margin-bottom: 10px;
 
     &:hover ${Overlay}{
         opacity: 0.5;

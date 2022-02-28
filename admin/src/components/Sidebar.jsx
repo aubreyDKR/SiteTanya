@@ -48,7 +48,7 @@ const Sidebar = () => {
             <Wrapper>
                 <Menu>
                     <Title>Dashboard</Title>
-                    <Link to="/" style={{ textDecoration: "none" }}>
+                    <Link to="/admin" style={{ textDecoration: "none" }}>
                         <MenuItem>
                             <MenuIcon>
                                 <LineStyle style={{ fontSize: 20 }} />
@@ -72,7 +72,7 @@ const Sidebar = () => {
 
                 <Menu>
                     <Title>Quick Menu</Title>
-                    <Link to="/users" style={{ textDecoration: "none" }}>
+                    <Link to="/admin/users" style={{ textDecoration: "none" }}>
                         <MenuItem>
                             <MenuIcon>
                                 <PersonOutlined style={{ fontSize: 20 }} />
@@ -80,7 +80,7 @@ const Sidebar = () => {
                             Users
                         </MenuItem>
                     </Link>
-                    <Link to="/products" style={{ textDecoration: "none" }}>
+                    <Link to="/admin/products" style={{ textDecoration: "none" }}>
                         <MenuItem>
                             <MenuIcon>
                                 <Storefront style={{ fontSize: 20 }} />

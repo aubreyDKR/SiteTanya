@@ -1,6 +1,8 @@
 import styled from "styled-components";
-import Navbar from '../components/Navbar';
+import Navbar from '../components/navbar/Navbar';
 import Footer from '../components/Footer';
+import {mobile, tablet} from "../responsive";
+import { ViewColumnTwoTone } from "@material-ui/icons";
 
 const Container = styled.div`
 
@@ -15,15 +17,24 @@ const Wrapper = styled.div`
     display: flex;
     width: 70%;
     margin: 0px auto 25px auto;
+    ${mobile({
+        width: "90%",
+        flexDirection: "column",
+    })}
 `;
 
 const Portrait = styled.img`
-    width: 400px;
+    flex: 1;
+    width: 100%;
     object-fit: scale-down;
     align-self: flex-start;
+    ${mobile({ 
+        alignSelf: "center",
+    })}
 `;
 
 const Right = styled.div`
+    flex: 1;
     margin: 20px;
 `;
 

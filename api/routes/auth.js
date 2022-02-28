@@ -8,6 +8,8 @@ const { isLoggedIn, isLoggedInAndAuthorized, isLoggedInAndAdmin } = require("./a
 
 dotenv.config();
 
+const wait = ms => new Promise(resolve => setTimeout(resolve, ms));
+
 router.get("/login/failed", (req,res) => {
     res.status(401).json({
         success: false,
@@ -16,18 +18,10 @@ router.get("/login/failed", (req,res) => {
     res.redirect(process.env.CLIENT_URL);
 });
 
-router.get("/isAdmin", isLoggedIn,(req,res) => {
-    if (req.user.isAdmin) {
-        res.status(200).json(true);
-    } else {
-        res.status(401).json(false);
-    }
-})
-
-router.get("/getUserInfos", isLoggedIn,(req,res) => {
-    res.status(200).json({
+router.get("/getUserInfos", isLoggedIn, async (req,res) => {
+    //await wait(3000);
+    await res.status(200).json({
         success: true,
-        message: "successful connection",
         user: req.user,
     });
 });

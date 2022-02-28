@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Language, NotificationsNone, Settings } from '@material-ui/icons';
 import { Badge } from '@material-ui/core';
+import { Link } from "react-router-dom";
 
 const Container = styled.div`
     width: 100%;
@@ -22,10 +23,11 @@ const Wrapper = styled.div`
 `;
 const Left = styled.div``;
 
-const Logo = styled.span`
+const Logo = styled.a`
     font-weight: bold;
     font-size: 30px;
     color: purple;
+    text-decoration: none;
 `;
 
 const Right = styled.div`
@@ -45,28 +47,31 @@ const ProfilePicture = styled.img`
 `;
 
 const Topbar = () => {
+    const [user, setUser] = useState([]);
+
+
     return (
         <Container>
             <Wrapper>
                 <Left>
-                    <Logo>
-                        Admin Panel
+                    <Logo href='/'>
+                        Tatiana Dekker
                     </Logo>
                 </Left>
                 <Right>
                     <IconContainer>
                         <Badge badgeContent={2} color="error">
-                            <NotificationsNone/>
+                            <NotificationsNone />
                         </Badge>
                     </IconContainer>
                     <IconContainer>
-                        <Language/>
+                        <Language />
                     </IconContainer>
                     <IconContainer>
-                        <Settings/>
+                        <Settings />
                     </IconContainer>
                     <IconContainer>
-                        <ProfilePicture src="https://sun9-49.userapi.com/impf/c837429/v837429916/5cc7e/Q9CEfEFF7g8.jpg?size=1280x1280&quality=96&sign=23063a57779cef0291940fcd6ef79423&type=album"/>
+                        <ProfilePicture src="https://sun9-49.userapi.com/impf/c837429/v837429916/5cc7e/Q9CEfEFF7g8.jpg?size=1280x1280&quality=96&sign=23063a57779cef0291940fcd6ef79423&type=album" />
                     </IconContainer>
                 </Right>
             </Wrapper>

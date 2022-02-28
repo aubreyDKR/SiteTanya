@@ -3,8 +3,9 @@ import { DataGrid } from '@material-ui/data-grid';
 import { DeleteOutline, EditOutlined } from '@material-ui/icons';
 import { Link } from "react-router-dom";
 import { products } from "../data.js";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { colorTertiary } from '../constants/styles';
+import { getProductsData } from '../api.js';
 
 const Container = styled.div`
     flex: 4;
@@ -40,10 +41,21 @@ const DeleteButton = styled(DeleteOutline)`
 `;
 
 const ProductList = () => {
-    const [data, setData] = useState(products);
+    const [productsData, setProductsData] = useState([]);
+
+    useEffect(() => {
+        const getProducts = async () => {
+            try {
+                await getProductsData(setProductsData);
+            } catch(err) {
+                console.log(err);
+            }
+        };
+        getProducts();
+    }, []);
 
     const columns = [
-        { field: 'id', headerName: 'ID', width: 90 },
+        { field: '_id', headerName: 'ID', width: 90 },
         {
             field: 'product',
             headerName: 'Product',
@@ -79,10 +91,10 @@ const ProductList = () => {
             renderCell: (params) => {
                 return (
                     <>
-                        <Link to={"/product/" + params.row.id} style={{ textDecoration: "none" }}>
+                        <Link to={"/admin/product/" + params.row._id} style={{ textDecoration: "none" }}>
                             <EditButton>Edit</EditButton>
                         </Link>
-                        <DeleteButton onClick={() => handleDelete(params.row.id)} />
+                        <DeleteButton onClick={() => handleDelete(params.row._id)} />
                     </>
                 )
             }
@@ -90,13 +102,14 @@ const ProductList = () => {
     ];
 
     const handleDelete = (id) => {
-        setData(data.filter((item) => item.id !== id));
+        setProductsData(productsData.filter((item) => item.id !== id));
     }
 
     return (
         <Container>
             <DataGrid
-                rows={data}
+                getRowId={(row) => row._id}
+                rows={productsData}
                 columns={columns}
                 pageSize={5}
                 rowsPerPageOptions={[5]}

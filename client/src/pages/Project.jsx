@@ -1,9 +1,11 @@
 import styled from "styled-components";
-import Navbar from "../components/Navbar";
+import Navbar from '../components/navbar/Navbar';
 import Footer from '../components/Footer';
 import { useEffect, useState } from "react";
 import { publicRequest } from "../requestMethods";
 import { useLocation } from "react-router-dom";
+import {mobile, tablet} from "../responsive";
+import { Autorenew } from "@material-ui/icons";
 
 const Container = styled.div``;
 
@@ -12,12 +14,19 @@ const Wrapper = styled.div`
     margin: auto;
     display: flex;
     flex-direction: column;
+    ${mobile({
+        width: "90%",
+    })}
 `;
 
 const Image = styled.img`
     height: 100%;
     max-height: 100vh;
     object-fit: scale-down;
+    ${mobile({
+        height: "auto",
+        maxHeight: "100vh",
+    })}
 `;
 
 const Title = styled.h1`
